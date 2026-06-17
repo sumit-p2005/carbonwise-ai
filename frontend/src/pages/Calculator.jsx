@@ -131,12 +131,14 @@ const Calculator = () => {
                     {/* Car */}
                     <div className="flex flex-col gap-1">
                       <div className="flex justify-between text-xs font-bold text-slate-600 dark:text-slate-400">
-                        <span className="flex items-center gap-1"><Car size={14} /> Car</span>
+                        <label htmlFor="carDistance" className="flex items-center gap-1"><Car size={14} /> Car</label>
                         <span>{carDistance} km/day</span>
                       </div>
                       <input
+                        id="carDistance"
                         type="range" min="0" max="150" value={carDistance}
                         onChange={(e) => setCarDistance(parseInt(e.target.value))}
+                        aria-label="Daily car travel distance in kilometers"
                         className="w-full accent-primary h-1.5 bg-slate-200 dark:bg-slate-800 rounded-lg appearance-none cursor-pointer"
                       />
                     </div>
@@ -144,12 +146,14 @@ const Calculator = () => {
                     {/* Bus */}
                     <div className="flex flex-col gap-1">
                       <div className="flex justify-between text-xs font-bold text-slate-600 dark:text-slate-400">
-                        <span className="flex items-center gap-1"><Bus size={14} /> Bus</span>
+                        <label htmlFor="busDistance" className="flex items-center gap-1"><Bus size={14} /> Bus</label>
                         <span>{busDistance} km/day</span>
                       </div>
                       <input
+                        id="busDistance"
                         type="range" min="0" max="100" value={busDistance}
                         onChange={(e) => setBusDistance(parseInt(e.target.value))}
+                        aria-label="Daily bus travel distance in kilometers"
                         className="w-full accent-primary h-1.5 bg-slate-200 dark:bg-slate-800 rounded-lg appearance-none cursor-pointer"
                       />
                     </div>
@@ -157,12 +161,14 @@ const Calculator = () => {
                     {/* Train */}
                     <div className="flex flex-col gap-1">
                       <div className="flex justify-between text-xs font-bold text-slate-600 dark:text-slate-400">
-                        <span className="flex items-center gap-1"><Train size={14} /> Train</span>
+                        <label htmlFor="trainDistance" className="flex items-center gap-1"><Train size={14} /> Train</label>
                         <span>{trainDistance} km/day</span>
                       </div>
                       <input
+                        id="trainDistance"
                         type="range" min="0" max="100" value={trainDistance}
                         onChange={(e) => setTrainDistance(parseInt(e.target.value))}
+                        aria-label="Daily train travel distance in kilometers"
                         className="w-full accent-primary h-1.5 bg-slate-200 dark:bg-slate-800 rounded-lg appearance-none cursor-pointer"
                       />
                     </div>
@@ -170,12 +176,14 @@ const Calculator = () => {
                     {/* Bike */}
                     <div className="flex flex-col gap-1">
                       <div className="flex justify-between text-xs font-bold text-slate-600 dark:text-slate-400">
-                        <span className="flex items-center gap-1"><Bike size={14} /> Bicycle</span>
+                        <label htmlFor="bikeDistance" className="flex items-center gap-1"><Bike size={14} /> Bicycle</label>
                         <span>{bikeDistance} km/day</span>
                       </div>
                       <input
+                        id="bikeDistance"
                         type="range" min="0" max="50" value={bikeDistance}
                         onChange={(e) => setBikeDistance(parseInt(e.target.value))}
+                        aria-label="Daily bicycle travel distance in kilometers"
                         className="w-full accent-primary h-1.5 bg-slate-200 dark:bg-slate-800 rounded-lg appearance-none cursor-pointer"
                       />
                     </div>
@@ -183,12 +191,14 @@ const Calculator = () => {
                     {/* Walk */}
                     <div className="flex flex-col gap-1">
                       <div className="flex justify-between text-xs font-bold text-slate-600 dark:text-slate-400">
-                        <span className="flex items-center gap-1"><Footprints size={14} /> Walking</span>
+                        <label htmlFor="walkingDistance" className="flex items-center gap-1"><Footprints size={14} /> Walking</label>
                         <span>{walkingDistance} km/day</span>
                       </div>
                       <input
+                        id="walkingDistance"
                         type="range" min="0" max="30" value={walkingDistance}
                         onChange={(e) => setWalkingDistance(parseInt(e.target.value))}
+                        aria-label="Daily walking travel distance in kilometers"
                         className="w-full accent-primary h-1.5 bg-slate-200 dark:bg-slate-800 rounded-lg appearance-none cursor-pointer"
                       />
                     </div>
@@ -218,12 +228,14 @@ const Calculator = () => {
                     {/* Quick Range Slider */}
                     <div className="flex flex-col gap-1 mt-2">
                       <div className="flex justify-between text-[11px] text-slate-400 font-bold">
-                        <span>Low Usage (100 kWh)</span>
-                        <span>High Usage (1000 kWh)</span>
+                        <label htmlFor="electricity-slider">Quick Select (100 - 1000 kWh)</label>
+                        <span>{monthlyElectricity} kWh</span>
                       </div>
                       <input
+                        id="electricity-slider"
                         type="range" min="50" max="1000" step="10" value={monthlyElectricity}
                         onChange={(e) => setMonthlyElectricity(parseInt(e.target.value))}
+                        aria-label="Monthly electricity usage slider"
                         className="w-full accent-primary h-1.5 bg-slate-200 dark:bg-slate-800 rounded-lg appearance-none cursor-pointer"
                       />
                     </div>
@@ -317,12 +329,14 @@ const Calculator = () => {
                     {/* Quick Range Slider */}
                     <div className="flex flex-col gap-1 mt-2">
                       <div className="flex justify-between text-[11px] text-slate-400 font-bold">
-                        <span>Low waste (1 kg)</span>
-                        <span>High waste (30 kg)</span>
+                        <label htmlFor="waste-slider">Quick Select (0 - 30 kg)</label>
+                        <span>{weeklyWaste} kg/week</span>
                       </div>
                       <input
+                        id="waste-slider"
                         type="range" min="0" max="30" value={weeklyWaste}
                         onChange={(e) => setWeeklyWaste(parseInt(e.target.value))}
+                        aria-label="Weekly waste generation slider"
                         className="w-full accent-primary h-1.5 bg-slate-200 dark:bg-slate-800 rounded-lg appearance-none cursor-pointer"
                       />
                     </div>

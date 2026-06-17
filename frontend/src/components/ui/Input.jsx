@@ -10,6 +10,10 @@ const Input = forwardRef(({
   helperText,
   ...props
 }, ref) => {
+  const errorId = error && id ? `${id}-error` : undefined;
+  const helperId = helperText && id ? `${id}-helper` : undefined;
+  const describedBy = [errorId, helperId].filter(Boolean).join(' ') || undefined;
+
   return (
     <div className="w-full flex flex-col gap-1.5 mb-4">
       {label && (
@@ -23,6 +27,8 @@ const Input = forwardRef(({
         type={type}
         id={id}
         required={required}
+        aria-invalid={error ? 'true' : 'false'}
+        aria-describedby={describedBy}
         className={`w-full px-4 py-2.5 bg-white/50 dark:bg-slate-800/50 border ${
           error
             ? 'border-rose-500 focus:ring-rose-500/30'
@@ -32,13 +38,13 @@ const Input = forwardRef(({
       />
       
       {error && (
-        <span className="text-xs text-rose-500 font-medium mt-0.5">
+        <span id={errorId} role="alert" className="text-xs text-rose-500 font-medium mt-0.5">
           {error}
         </span>
       )}
       
       {!error && helperText && (
-        <span className="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5 leading-normal">
+        <span id={helperId} className="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5 leading-normal">
           {helperText}
         </span>
       )}

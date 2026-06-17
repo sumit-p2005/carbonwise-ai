@@ -1,6 +1,7 @@
 import fs from 'fs/promises';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import crypto from 'crypto';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -27,6 +28,7 @@ const INITIAL_DB = {
 class DbService {
   constructor() {
     this.lock = false;
+    this.data = null;
   }
 
   async init() {
@@ -34,26 +36,25 @@ class DbService {
       await fs.mkdir(path.dirname(DB_PATH), { recursive: true });
       try {
         await fs.access(DB_PATH);
-        // Load and verify schema
-        const data = await this.read();
+        this.data = await this.readFromFile();
         let updated = false;
-        if (!data.users) { data.users = []; updated = true; }
-        if (!data.carbonHistory) { data.carbonHistory = []; updated = true; }
-        if (!data.challenges || data.challenges.length === 0) { data.challenges = DEFAULT_CHALLENGES; updated = true; }
-        if (!data.userChallenges) { data.userChallenges = []; updated = true; }
+        if (!this.data.users) { this.data.users = []; updated = true; }
+        if (!this.data.carbonHistory) { this.data.carbonHistory = []; updated = true; }
+        if (!this.data.challenges || this.data.challenges.length === 0) { this.data.challenges = DEFAULT_CHALLENGES; updated = true; }
+        if (!this.data.userChallenges) { this.data.userChallenges = []; updated = true; }
         if (updated) {
-          await this.write(data);
+          await this.writeToFile(this.data);
         }
       } catch (err) {
-        // Create initial db
-        await this.write(INITIAL_DB);
+        this.data = { ...INITIAL_DB };
+        await this.writeToFile(INITIAL_DB);
       }
     } catch (error) {
       console.error('Database initialization failed:', error);
     }
   }
 
-  async read() {
+  async readFromFile() {
     try {
       const content = await fs.readFile(DB_PATH, 'utf-8');
       return JSON.parse(content);
@@ -63,8 +64,7 @@ class DbService {
     }
   }
 
-  async write(data) {
-    // Basic write locking to prevent corruption
+  async writeToFile(data) {
     while (this.lock) {
       await new Promise(resolve => setTimeout(resolve, 50));
     }
@@ -74,6 +74,18 @@ class DbService {
     } finally {
       this.lock = false;
     }
+  }
+
+  async read() {
+    if (!this.data) {
+      this.data = await this.readFromFile();
+    }
+    return this.data;
+  }
+
+  async write(data) {
+    this.data = data;
+    await this.writeToFile(data);
   }
 
   // User Helpers
@@ -89,11 +101,14 @@ class DbService {
 
   async createUser(user) {
     const db = await this.read();
+    // Destructure and sanitize properties to prevent JSON property override vulnerabilities
     const newUser = {
       id: crypto.randomUUID ? crypto.randomUUID() : Math.random().toString(36).substring(2, 15),
+      name: String(user.name || ''),
+      email: String(user.email || '').toLowerCase(),
+      password: String(user.password || ''),
       ecoScore: 100, // Starts at baseline 100
-      createdAt: new Date().toISOString(),
-      ...user
+      createdAt: new Date().toISOString()
     };
     db.users.push(newUser);
     await this.write(db);
@@ -104,7 +119,7 @@ class DbService {
     const db = await this.read();
     const userIndex = db.users.findIndex(u => u.id === userId);
     if (userIndex !== -1) {
-      db.users[userIndex].ecoScore = (db.users[userIndex].ecoScore || 100) + points;
+      db.users[userIndex].ecoScore = (db.users[userIndex].ecoScore || 100) + Number(points);
       await this.write(db);
       return db.users[userIndex];
     }
@@ -123,9 +138,27 @@ class DbService {
     const db = await this.read();
     const newRecord = {
       id: crypto.randomUUID ? crypto.randomUUID() : Math.random().toString(36).substring(2, 15),
-      userId,
+      userId: String(userId),
       createdAt: new Date().toISOString(),
-      ...calcData
+      inputs: {
+        bikeDistance: Number(calcData.inputs?.bikeDistance ?? 0),
+        walkingDistance: Number(calcData.inputs?.walkingDistance ?? 0),
+        carDistance: Number(calcData.inputs?.carDistance ?? 0),
+        busDistance: Number(calcData.inputs?.busDistance ?? 0),
+        trainDistance: Number(calcData.inputs?.trainDistance ?? 0),
+        monthlyElectricity: Number(calcData.inputs?.monthlyElectricity ?? 0),
+        dietType: String(calcData.inputs?.dietType ?? 'mixed'),
+        weeklyWaste: Number(calcData.inputs?.weeklyWaste ?? 0)
+      },
+      breakdown: {
+        transport: Number(calcData.breakdown?.transport ?? 0),
+        energy: Number(calcData.breakdown?.energy ?? 0),
+        food: Number(calcData.breakdown?.food ?? 0),
+        waste: Number(calcData.breakdown?.waste ?? 0)
+      },
+      totalMonthly: Number(calcData.totalMonthly ?? 0),
+      totalYearly: Number(calcData.totalYearly ?? 0),
+      score: Number(calcData.score ?? 0)
     };
     db.carbonHistory.push(newRecord);
     await this.write(db);
@@ -164,10 +197,10 @@ class DbService {
 
     // Record completion
     const newCompletion = {
-      userId,
-      challengeId,
+      userId: String(userId),
+      challengeId: String(challengeId),
       completedAt: new Date().toISOString(),
-      pointsEarned: challenge.points
+      pointsEarned: Number(challenge.points)
     };
 
     db.userChallenges.push(newCompletion);

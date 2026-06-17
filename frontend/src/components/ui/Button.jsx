@@ -31,6 +31,7 @@ const Button = ({
       whileTap={!disabled && !loading ? { scale: 0.98 } : {}}
       className={`${baseStyle} ${variants[variant]} ${sizes[size]} ${className}`}
       disabled={disabled || loading}
+      aria-busy={loading ? 'true' : undefined}
       {...props}
     >
       {loading ? (

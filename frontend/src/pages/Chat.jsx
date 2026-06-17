@@ -53,6 +53,7 @@ const Chat = () => {
 
   return (
     <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full h-[85vh] flex flex-col lg:flex-row gap-6">
+      <h1 className="sr-only">AI Sustainability Coach Chat</h1>
       
       {/* Sidebar - Coach Profile & Quick Prompts */}
       <Card hoverEffect={false} className="w-full lg:w-80 shrink-0 border border-slate-100 dark:border-slate-800 flex flex-col justify-between text-left p-6 h-fit lg:h-full">

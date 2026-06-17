@@ -21,7 +21,7 @@ const Leaderboard = () => {
       case 2:
         return <Medal className="text-slate-400 fill-slate-400/10" size={20} />;
       case 3:
-        return <Medal className="text-amber-600 fill-amber-650/10" size={20} />;
+        return <Medal className="text-amber-600 fill-amber-600/10" size={20} />;
       default:
         return <span className="text-xs font-bold text-slate-400 dark:text-slate-500">#{rank}</span>;
     }
@@ -126,14 +126,14 @@ const Leaderboard = () => {
                     return (
                       <tr
                         key={u.id}
-                        className={`text-xs font-semibold hover:bg-slate-50/50 dark:hover:bg-slate-850/20 transition ${
+                        className={`text-xs font-semibold hover:bg-slate-50/50 dark:hover:bg-slate-800/20 transition ${
                           isSelf ? 'bg-primary/[0.02]' : ''
                         }`}
                       >
                         <td className="px-6 py-4 flex items-center gap-2">
                           {getRankBadge(index + 1)}
                         </td>
-                        <td className={`px-6 py-4 ${isSelf ? 'text-primary font-bold' : 'text-slate-900 dark:text-slate-250'}`}>
+                        <td className={`px-6 py-4 ${isSelf ? 'text-primary font-bold' : 'text-slate-900 dark:text-slate-300'}`}>
                           <div className="flex items-center gap-2">
                             <span className="w-6 h-6 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-[10px] text-slate-500 font-bold shrink-0">
                               {u.name.charAt(0)}

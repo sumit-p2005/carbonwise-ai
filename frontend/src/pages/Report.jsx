@@ -174,25 +174,25 @@ const Report = () => {
               {/* Data list */}
               <div className="flex flex-col gap-3">
                 {/* Transport */}
-                <div className="flex justify-between items-center text-xs font-bold border-b border-slate-100 dark:border-slate-850 pb-2">
+                <div className="flex justify-between items-center text-xs font-bold border-b border-slate-100 dark:border-slate-800 pb-2">
                   <span className="text-slate-600 dark:text-slate-400">🚗 Transportation</span>
                   <span className="text-slate-900 dark:text-white">{reportData.breakdown.transport} kg CO₂</span>
                 </div>
                 
                 {/* Energy */}
-                <div className="flex justify-between items-center text-xs font-bold border-b border-slate-100 dark:border-slate-850 pb-2">
+                <div className="flex justify-between items-center text-xs font-bold border-b border-slate-100 dark:border-slate-800 pb-2">
                   <span className="text-slate-600 dark:text-slate-400">💡 Home Energy</span>
                   <span className="text-slate-900 dark:text-white">{reportData.breakdown.energy} kg CO₂</span>
                 </div>
 
                 {/* Food */}
-                <div className="flex justify-between items-center text-xs font-bold border-b border-slate-100 dark:border-slate-850 pb-2">
+                <div className="flex justify-between items-center text-xs font-bold border-b border-slate-100 dark:border-slate-800 pb-2">
                   <span className="text-slate-600 dark:text-slate-400">🍏 Dietary Intake</span>
                   <span className="text-slate-900 dark:text-white">{reportData.breakdown.food} kg CO₂</span>
                 </div>
 
                 {/* Waste */}
-                <div className="flex justify-between items-center text-xs font-bold border-b border-slate-100 dark:border-slate-850 pb-2">
+                <div className="flex justify-between items-center text-xs font-bold border-b border-slate-100 dark:border-slate-800 pb-2">
                   <span className="text-slate-600 dark:text-slate-400">🗑️ Waste Output</span>
                   <span className="text-slate-900 dark:text-white">{reportData.breakdown.waste} kg CO₂</span>
                 </div>
@@ -206,25 +206,25 @@ const Report = () => {
                   {/* Transport */}
                   <div
                     className="bg-emerald-500 h-full"
-                    style={{ width: `${(reportData.breakdown.transport / reportData.currentEmissions) * 100}%` }}
+                    style={{ width: `${reportData.currentEmissions > 0 ? (reportData.breakdown.transport / reportData.currentEmissions) * 100 : 0}%` }}
                     title="Transport"
                   />
                   {/* Energy */}
                   <div
                     className="bg-blue-500 h-full"
-                    style={{ width: `${(reportData.breakdown.energy / reportData.currentEmissions) * 100}%` }}
+                    style={{ width: `${reportData.currentEmissions > 0 ? (reportData.breakdown.energy / reportData.currentEmissions) * 100 : 0}%` }}
                     title="Energy"
                   />
                   {/* Food */}
                   <div
                     className="bg-yellow-500 h-full"
-                    style={{ width: `${(reportData.breakdown.food / reportData.currentEmissions) * 100}%` }}
+                    style={{ width: `${reportData.currentEmissions > 0 ? (reportData.breakdown.food / reportData.currentEmissions) * 100 : 0}%` }}
                     title="Food"
                   />
                   {/* Waste */}
                   <div
                     className="bg-rose-500 h-full"
-                    style={{ width: `${(reportData.breakdown.waste / reportData.currentEmissions) * 100}%` }}
+                    style={{ width: `${reportData.currentEmissions > 0 ? (reportData.breakdown.waste / reportData.currentEmissions) * 100 : 0}%` }}
                     title="Waste"
                   />
                 </div>

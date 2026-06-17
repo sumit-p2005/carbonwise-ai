@@ -25,8 +25,11 @@ function App() {
         <AuthProvider>
           <CarbonProvider>
             <div className="flex flex-col min-h-screen">
+              <a href="#main-content" className="skip-link">
+                Skip to main content
+              </a>
               <Navbar />
-              <main className="flex-grow flex flex-col justify-start">
+              <main id="main-content" tabIndex="-1" className="flex-grow flex flex-col justify-start">
                 <Routes>
                   {/* Public Pages */}
                   <Route path="/" element={<LandingPage />} />

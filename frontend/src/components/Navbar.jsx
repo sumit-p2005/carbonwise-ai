@@ -31,11 +31,11 @@ const Navbar = () => {
   const inactiveClass = "flex items-center gap-2 px-3 py-2 rounded-lg text-slate-600 dark:text-slate-300 hover:text-primary dark:hover:text-primary hover:bg-slate-100 dark:hover:bg-slate-800 text-sm transition-all duration-200";
 
   return (
-    <nav className="glass-nav sticky top-0 z-50 w-full transition-all duration-200 no-print">
+    <nav className="glass-nav sticky top-0 z-50 w-full transition-all duration-200 no-print" aria-label="Primary navigation">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
-          <Link to="/" className="flex items-center gap-2 font-bold text-xl text-slate-900 dark:text-white">
+          <Link to="/" className="flex items-center gap-2 font-bold text-xl text-slate-900 dark:text-white" aria-label="CarbonWise AI home">
             <div className="p-1.5 bg-primary rounded-lg text-white">
               <Leaf size={20} className="fill-current" />
             </div>
@@ -46,7 +46,12 @@ const Navbar = () => {
           {user && (
             <div className="hidden lg:flex items-center gap-1">
               {navLinks.map((link) => (
-                <NavLink key={link.to} to={link.to} className={({ isActive }) => isActive ? activeClass : inactiveClass}>
+                <NavLink
+                  key={link.to}
+                  to={link.to}
+                  aria-current={({ isActive }) => (isActive ? 'page' : undefined)}
+                  className={({ isActive }) => isActive ? activeClass : inactiveClass}
+                >
                   <link.icon size={16} />
                   <span>{link.label}</span>
                 </NavLink>
@@ -60,7 +65,7 @@ const Navbar = () => {
             <button
               onClick={toggleTheme}
               className="p-2 text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition"
-              aria-label="Toggle Theme"
+              aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} theme`}
             >
               {theme === 'dark' ? <Sun size={18} /> : <Moon size={18} />}
             </button>
@@ -81,7 +86,8 @@ const Navbar = () => {
 
                 <button
                   onClick={handleLogout}
-                  className="flex items-center gap-1.5 px-3 py-1.5 bg-rose-550/10 hover:bg-rose-500/20 text-rose-500 rounded-lg text-xs font-semibold border border-rose-500/10 transition"
+                  className="flex items-center gap-1.5 px-3 py-1.5 bg-rose-500/10 hover:bg-rose-500/20 text-rose-500 rounded-lg text-xs font-semibold border border-rose-500/10 transition"
+                  aria-label="Log out of CarbonWise AI"
                 >
                   <LogOut size={13} />
                   <span>Logout</span>
@@ -104,7 +110,7 @@ const Navbar = () => {
             <button
               onClick={toggleTheme}
               className="p-2 text-slate-500 dark:text-slate-400 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800"
-              aria-label="Toggle Theme"
+              aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} theme`}
             >
               {theme === 'dark' ? <Sun size={18} /> : <Moon size={18} />}
             </button>
@@ -112,7 +118,9 @@ const Navbar = () => {
             <button
               onClick={() => setIsOpen(!isOpen)}
               className="p-2 text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg"
-              aria-label="Open Menu"
+              aria-label={isOpen ? 'Close navigation menu' : 'Open navigation menu'}
+              aria-expanded={isOpen}
+              aria-controls="mobile-navigation"
             >
               {isOpen ? <X size={20} /> : <Menu size={20} />}
             </button>
@@ -127,6 +135,7 @@ const Navbar = () => {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
+            id="mobile-navigation"
             className="lg:hidden bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 overflow-hidden"
           >
             <div className="px-2 pt-2 pb-4 space-y-1">
@@ -145,6 +154,7 @@ const Navbar = () => {
                       key={link.to}
                       to={link.to}
                       onClick={() => setIsOpen(false)}
+                      aria-current={({ isActive }) => (isActive ? 'page' : undefined)}
                       className={({ isActive }) =>
                         isActive
                           ? "flex items-center gap-3 px-4 py-2.5 rounded-lg text-primary font-semibold bg-emerald-50 dark:bg-emerald-950/20 text-sm"
