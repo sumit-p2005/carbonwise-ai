@@ -85,7 +85,10 @@ class DbService {
 
   async write(data) {
     this.data = data;
-    await this.writeToFile(data);
+    // Perform background disk write to avoid blocking the event loop
+    this.writeToFile(data).catch(err => {
+      console.error('Database write error:', err);
+    });
   }
 
   // User Helpers

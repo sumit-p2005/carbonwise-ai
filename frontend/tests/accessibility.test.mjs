@@ -38,3 +38,12 @@ test('navigation communicates menu state and current page to assistive technolog
   expect(navbar).toMatch(/aria-expanded/);
   expect(navbar).toMatch(/aria-current/);
 });
+
+test('calculator page connects sliders and radio inputs with accessible label tags', () => {
+  const calc = read('src/pages/Calculator.jsx');
+
+  expect(calc).toMatch(/id="carDistance"/);
+  expect(calc).toMatch(/htmlFor="carDistance"/);
+  expect(calc).toMatch(/id="diet-vegetarian"/);
+  expect(calc).toMatch(/htmlFor="diet-vegetarian"/);
+});

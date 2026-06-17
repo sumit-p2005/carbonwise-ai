@@ -254,55 +254,73 @@ const Calculator = () => {
 
                   <div className="grid grid-cols-1 gap-4 mt-4">
                     {/* Vegetarian */}
-                    <label className={`p-4 border rounded-2xl flex items-center justify-between cursor-pointer transition ${
+                    <div className={`p-4 border rounded-2xl flex items-center justify-between cursor-pointer transition ${
                       dietType === 'vegetarian' ? 'border-primary bg-emerald-500/5' : 'border-slate-200 dark:border-slate-800'
                     }`}>
                       <div className="flex items-center gap-3">
                         <input
-                          type="radio" name="diet" value="vegetarian" checked={dietType === 'vegetarian'}
-                          onChange={() => setDietType('vegetarian')} className="accent-primary"
+                          id="diet-vegetarian"
+                          type="radio"
+                          name="diet"
+                          value="vegetarian"
+                          checked={dietType === 'vegetarian'}
+                          onChange={() => setDietType('vegetarian')}
+                          aria-label="Vegetarian or Vegan diet profile option"
+                          className="accent-primary"
                         />
-                        <div className="text-left">
-                          <p className="text-sm font-bold text-slate-900 dark:text-white">Vegetarian / Vegan</p>
-                          <p className="text-xs text-slate-500 mt-0.5">Focus on vegetables, grains, plant proteins. Low environmental index.</p>
-                        </div>
+                        <label htmlFor="diet-vegetarian" className="text-left cursor-pointer">
+                          <span className="text-sm font-bold text-slate-900 dark:text-white block">Vegetarian / Vegan</span>
+                          <span className="text-xs text-slate-500 mt-0.5 block">Focus on vegetables, grains, plant proteins. Low environmental index.</span>
+                        </label>
                       </div>
                       <span className="text-xs font-bold text-primary">~1.5t CO₂/yr</span>
-                    </label>
+                    </div>
 
                     {/* Mixed */}
-                    <label className={`p-4 border rounded-2xl flex items-center justify-between cursor-pointer transition ${
+                    <div className={`p-4 border rounded-2xl flex items-center justify-between cursor-pointer transition ${
                       dietType === 'mixed' ? 'border-primary bg-emerald-500/5' : 'border-slate-200 dark:border-slate-800'
                     }`}>
                       <div className="flex items-center gap-3">
                         <input
-                          type="radio" name="diet" value="mixed" checked={dietType === 'mixed'}
-                          onChange={() => setDietType('mixed')} className="accent-primary"
+                          id="diet-mixed"
+                          type="radio"
+                          name="diet"
+                          value="mixed"
+                          checked={dietType === 'mixed'}
+                          onChange={() => setDietType('mixed')}
+                          aria-label="Mixed diet profile option"
+                          className="accent-primary"
                         />
-                        <div className="text-left">
-                          <p className="text-sm font-bold text-slate-900 dark:text-white">Mixed Diet</p>
-                          <p className="text-xs text-slate-500 mt-0.5">Average balance of vegetables, dairy, grains, poultry, and occasional meats.</p>
-                        </div>
+                        <label htmlFor="diet-mixed" className="text-left cursor-pointer">
+                          <span className="text-sm font-bold text-slate-900 dark:text-white block">Mixed Diet</span>
+                          <span className="text-xs text-slate-500 mt-0.5 block">Average balance of vegetables, dairy, grains, poultry, and occasional meats.</span>
+                        </label>
                       </div>
                       <span className="text-xs font-bold text-blue-500">~2.5t CO₂/yr</span>
-                    </label>
+                    </div>
 
                     {/* Non-Vegetarian */}
-                    <label className={`p-4 border rounded-2xl flex items-center justify-between cursor-pointer transition ${
+                    <div className={`p-4 border rounded-2xl flex items-center justify-between cursor-pointer transition ${
                       dietType === 'non-vegetarian' ? 'border-primary bg-emerald-500/5' : 'border-slate-200 dark:border-slate-800'
                     }`}>
                       <div className="flex items-center gap-3">
                         <input
-                          type="radio" name="diet" value="non-vegetarian" checked={dietType === 'non-vegetarian'}
-                          onChange={() => setDietType('non-vegetarian')} className="accent-primary"
+                          id="diet-non-vegetarian"
+                          type="radio"
+                          name="diet"
+                          value="non-vegetarian"
+                          checked={dietType === 'non-vegetarian'}
+                          onChange={() => setDietType('non-vegetarian')}
+                          aria-label="Non-vegetarian diet profile option"
+                          className="accent-primary"
                         />
-                        <div className="text-left">
-                          <p className="text-sm font-bold text-slate-900 dark:text-white">Non-Vegetarian</p>
-                          <p className="text-xs text-slate-500 mt-0.5">Frequent consumption of red meat (beef, lamb, pork) and seafood. High carbon profile.</p>
-                        </div>
+                        <label htmlFor="diet-non-vegetarian" className="text-left cursor-pointer">
+                          <span className="text-sm font-bold text-slate-900 dark:text-white block">Non-Vegetarian</span>
+                          <span className="text-xs text-slate-500 mt-0.5 block">Frequent consumption of red meat (beef, lamb, pork) and seafood. High carbon profile.</span>
+                        </label>
                       </div>
                       <span className="text-xs font-bold text-rose-500">~3.3t CO₂/yr</span>
-                    </label>
+                    </div>
                   </div>
                 </motion.div>
               )}
